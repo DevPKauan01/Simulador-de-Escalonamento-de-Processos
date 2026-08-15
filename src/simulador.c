@@ -30,6 +30,11 @@ void executar_simulacao(Processo** lista_processos, int total_processos, int cus
     Processo* processo_atual = NULL;
     Processo* processo_anterior = NULL;
 
+    // Ticks restantes de troca de contexto: enquanto > 0, a CPU está
+    // indisponível (nenhuma rajada é consumida), mas chegadas e E/S
+    // continuam avançando normalmente, tick a tick.
+    int ticks_troca_restantes = 0;
+
     while (processos_concluidos < total_processos) {
         // Chegada de novos processos
         for (int i = 0; i < total_processos; i++) {
@@ -68,12 +73,12 @@ void executar_simulacao(Processo** lista_processos, int total_processos, int cus
         atualizar_tempo_espera_pronto(fila_prontos);
 
         // Escolha do próximo processo para a CPU
-        if (processo_atual == NULL && fila_prontos != NULL && fila_prontos->tamanho > 0) {
+        if (processo_atual == NULL && ticks_troca_restantes == 0 && fila_prontos != NULL && fila_prontos->tamanho > 0) {
             if (algoritmo.escolher_proximo != NULL) {
                 Processo* proximo = algoritmo.escolher_proximo(fila_prontos);
                 if (proximo != NULL) {
                     if (proximo != processo_anterior) {
-                        tempo_atual += custo_troca_contexto;
+                        ticks_troca_restantes = custo_troca_contexto;
                     }
                     processo_anterior = processo_atual;
                     processo_atual = proximo;
@@ -84,7 +89,11 @@ void executar_simulacao(Processo** lista_processos, int total_processos, int cus
 
         // Execução do processo na CPU por um tick
         if (processo_atual != NULL) {
-            if (algoritmo.deve_preemptar != NULL && algoritmo.deve_preemptar(processo_atual)) {
+            if (ticks_troca_restantes > 0) {
+                // CPU ocupada trocando de contexto: nenhuma rajada é consumida
+                // neste tick, mas chegadas e E/S já avançaram acima.
+                ticks_troca_restantes--;
+            } else if (algoritmo.deve_preemptar != NULL && algoritmo.deve_preemptar(processo_atual)) {
                 processo_atual->estado = ESTADO_PRONTO;
                 enfileirar(fila_prontos, processo_atual);
                 processo_anterior = processo_atual;
