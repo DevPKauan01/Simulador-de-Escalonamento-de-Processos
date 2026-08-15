@@ -8,6 +8,8 @@
 
 Algoritmo criar_fcfs(void);
 Algoritmo criar_rr(int q);
+Algoritmo criar_prioridade(void);
+Algoritmo criar_proprio(void);
 
 int main(int argc, char *argv[]) {
     unsigned int seed = 42;
@@ -31,8 +33,12 @@ int main(int argc, char *argv[]) {
         alg = criar_fcfs();
     } else if (strcmp(algoritmo, "RR") == 0) {
         alg = criar_rr(quantum);
+    } else if (strcmp(algoritmo, "PRIORIDADE") == 0) {
+        alg = criar_prioridade();
+    } else if (strcmp(algoritmo, "PROPRIO") == 0) {
+        alg = criar_proprio();
     } else {
-        fprintf(stderr, "Algoritmo %s não implementado ainda.\n", algoritmo);
+        fprintf(stderr, "Algoritmo %s nao implementado ainda.\n", algoritmo);
         liberar_carga_trabalho(processos, num_processos);
         return 1;
     }
