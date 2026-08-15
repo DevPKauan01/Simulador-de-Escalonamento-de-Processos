@@ -17,13 +17,15 @@ int main(int argc, char *argv[]) {
     CenarioSimulacao cenario = CENARIO_ALEATORIO_EQUILIBRADO;
     char algoritmo[20] = "FCFS";
     int custo_troca_contexto = 2;
-    int quantum = 10;
+    int quantum = 10;             
 
-    if (argc >= 5) {
+    if (argc >= 7) { 
         seed = (unsigned int) atoi(argv[1]);
         cenario = (CenarioSimulacao) atoi(argv[2]);
         strncpy(algoritmo, argv[3], sizeof(algoritmo) - 1);
         num_processos = atoi(argv[4]);
+        custo_troca_contexto = atoi(argv[5]);
+        quantum = atoi(argv[6]);
     }
 
     Processo **processos = gerar_carga_trabalho(seed, cenario, num_processos);
@@ -43,7 +45,27 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    executar_simulacao(processos, num_processos, custo_troca_contexto, alg);
+    int trocas_contexto = executar_simulacao(processos, num_processos, custo_troca_contexto, alg);
+
+    double avg_turnaround = 0.0;
+    double sum_slowdown = 0.0;
+    double sum_slowdown_sq = 0.0;
+    
+    for (int i = 0; i < num_processos; i++) {
+        avg_turnaround += processos[i]->turnaround_time;
+        
+        double tempo_minimo_ideal = processos[i]->tempo_total_cpu + processos[i]->tempo_total_io;
+        double slowdown = (double)processos[i]->turnaround_time / tempo_minimo_ideal;
+        
+        sum_slowdown += slowdown;
+        sum_slowdown_sq += (slowdown * slowdown);
+    }
+    
+    avg_turnaround /= num_processos;
+    
+    double jain_index = (sum_slowdown * sum_slowdown) / (num_processos * sum_slowdown_sq) * 100.0;
+
+    printf("%s,%d,%u,%.4f,%d,%.4f\n", algoritmo, cenario, seed, avg_turnaround, trocas_contexto, jain_index);
 
     liberar_carga_trabalho(processos, num_processos);
     return 0;

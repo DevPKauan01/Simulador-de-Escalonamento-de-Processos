@@ -20,9 +20,10 @@ static void atualizar_tempo_espera_pronto(Fila* fila_prontos) {
 }
 
 // Função principal que orquestra a simulação em tempo discreto
-void executar_simulacao(Processo** lista_processos, int total_processos, int custo_troca_contexto, Algoritmo algoritmo) {
+int executar_simulacao(Processo** lista_processos, int total_processos, int custo_troca_contexto, Algoritmo algoritmo) {
     int tempo_atual = 0;
     int processos_concluidos = 0;
+    int total_trocas_contexto = 0;
 
     Fila* fila_prontos = criar_fila();
     Fila* fila_bloqueados = criar_fila();
@@ -79,8 +80,9 @@ void executar_simulacao(Processo** lista_processos, int total_processos, int cus
                 if (proximo != NULL) {
                     if (proximo != processo_anterior) {
                         ticks_troca_restantes = custo_troca_contexto;
+                        total_trocas_contexto++;
                     }
-                    processo_anterior = processo_atual;
+                    // A linha que tinha aqui foi apagada. Fim do bug!
                     processo_atual = proximo;
                     processo_atual->estado = ESTADO_EXECUTANDO;
                 }
@@ -143,4 +145,5 @@ void executar_simulacao(Processo** lista_processos, int total_processos, int cus
 
     liberar_fila(fila_prontos);
     liberar_fila(fila_bloqueados);
+    return total_trocas_contexto;
 }
