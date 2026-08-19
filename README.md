@@ -93,8 +93,8 @@ python scripts/gerar_graficos.py
 ## 👥 Equipe e Autores
 
 Trabalho desenvolvido por alunos da Universidade Federal do Cariri (UFCA):
-- Heberthy Samir Oliveira Furtado de Souza — [@heberthysamir](github.com/heberthysamir)
-- Pedro Kauan Cardoso da Silva — [@DevPKauan01](github.com/DevPKauan01)
-- Joaquim Arthur Muniz Leite — [@joarthurr](github.com/joarthurr)
-- José Welton de Sousa Melo — [@jweltu](github.com/jweltu)
-- Ramona Vitória Clemente Cardoso — [@ramona-dev](github.com/ramona-dev)
+- Heberthy Samir Oliveira Furtado de Souza — @heberthysamir
+- Pedro Kauan Cardoso da Silva — @DevPKauan01
+- Joaquim Arthur Muniz Leite — @joarthurr
+- José Welton de Sousa Melo — @jweltu
+- Ramona Vitória Clemente Cardoso — @ramona-dev
