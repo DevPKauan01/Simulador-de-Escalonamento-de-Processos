@@ -27,6 +27,68 @@ prioridade (níveis 1 a 3) e 20% baixa prioridade (8 a 10).
 
 ## 📈 Métricas Avaliadas
 
-- Turnaround Médio (\overline{T}): Tempo total transcorrido desde a chegada até a conclusão do processo.
-- Trocas de Contexto: Quantidade de substituições de processo na CPU (C = 2 ticks de custo por troca).
-- Índice de Justiça de Jain (J_{slowdown}): Medido sobre o slowdown individual dos processos para verificar a equidade na distribuição de recursos.
+- **Turnaround Médio (\overline{T}):** Tempo total transcorrido desde a chegada até a conclusão do processo.
+- **Trocas de Contexto:** Quantidade de substituições de processo na CPU (C = 2 ticks de custo por troca).
+- **Índice de Justiça de Jain (J_{slowdown}):** Medido sobre o slowdown individual dos processos para verificar a equidade na distribuição de recursos.
+
+## 📁 Estrutura do Repositório
+
+```
+├── include/ # Arquivos de cabeçalho (.h)
+├── src/ # Código-fonte principal do simulador em C
+│ └── algoritmos/ # Implementação de cada política de escalonamento
+├── scripts/ # Scripts em Python para processamento de estatísticas e gráficos
+├── executar_experimentos.sh # Automagicamente roda a bateria de 1.600 simulações
+├── resultados.csv 
+├── resultados_simulacao.csv
+├── grafico_1_turnaround.png
+├── grafico_2_trocas_contexto.png
+├── grafico_3_justica_jain.png
+├── simulador.exe
+├── README.md # Documentação do repositório 
+└── Projeto_escalonamento_de_processos.pdf # Artigo do estudo
+```
+
+## 🚀 Como Compilar e Executar
+
+### Pré-requisitos
+
+- GCC (Compilador C)
+- Python 3.8+ com as bibliotecas: pandas, matplotlib, seaborn, scipy
+
+### 1. Clonar o Repositório
+
+```
+git clone
+https://github.com/DevPKauan01/Simulador-de-Escalonamento-de-Processos.git
+cd Simulador-de-Escalonamento-de-Processos
+```
+
+### 2. Instalar Dependências do Python
+
+``` pip install pandas matplotlib seaborn scipy ```
+
+### 3. Compilar o Simulador em C
+
+``` gcc -Wall -Wextra -Iinclude src/*.c src/algoritmos/*.c -o simulador ```
+
+### 4. Executar Bateria Completa de Experimentos
+
+- Rode o script de automação para executar as 1.600 simulações e gerar a base resultados.csv:
+```
+chmod +x executar_experimentos.sh
+./executar_experimentos.sh
+```
+
+### 5. Gerar Gráficos e Análise Estatística
+
+``` python scripts/gerar_graficos.py ```
+
+## 👥 Equipe e Autores
+
+Trabalho desenvolvido por alunos da Universidade Federal do Cariri (UFCA):
+- Heberthy Samir Oliveira Furtado de Souza — @heberthysamir
+- Pedro Kauan Cardoso da Silva — @DevPKauan01
+- Joaquim Arthur Muniz Leite — @joarthurr
+- José Welton de Sousa Melo — @jweltu
+- Ramona Vitória Clemente Cardoso — @ramona-dev
