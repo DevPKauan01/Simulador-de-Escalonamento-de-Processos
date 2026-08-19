@@ -66,11 +66,15 @@ cd Simulador-de-Escalonamento-de-Processos
 
 ### 2. Instalar Dependências do Python
 
-``` pip install pandas matplotlib seaborn scipy ```
+``` 
+pip install pandas matplotlib seaborn scipy
+```
 
 ### 3. Compilar o Simulador em C
 
-``` gcc -Wall -Wextra -Iinclude src/*.c src/algoritmos/*.c -o simulador ```
+``` 
+gcc -Wall -Wextra -Iinclude src/*.c src/algoritmos/*.c -o simulador
+```
 
 ### 4. Executar Bateria Completa de Experimentos
 
@@ -82,7 +86,9 @@ chmod +x executar_experimentos.sh
 
 ### 5. Gerar Gráficos e Análise Estatística
 
-``` python scripts/gerar_graficos.py ```
+``` 
+python scripts/gerar_graficos.py
+```
 
 ## 👥 Equipe e Autores
 
